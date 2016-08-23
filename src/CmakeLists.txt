@@ -1,0 +1,54 @@
+# Collect sources into the variable MATH_SOURCES with 
+# having to explicitly list each header and source file
+file (GLOB MATH_SOURCES
+	  "*.h"
+	  "*.cpp")
+
+# Collect sources into the variable SIMPLE_FUNCTION_SOURCES  
+#file (GLOB SIMPLE_FUNCTION_SOURCES
+#      "simple/*.h"
+#      "simple/*.cxx")
+
+# Set Properties->General->Configuration Type to Application(.exe)
+# Creates app.exe with the listed sources (main.cxx)
+# Adds sources to the Solution Explorer
+add_executable (app AssimpModel.cpp Mesh.cpp Model.cpp Shader.cpp)
+
+# Another way to collect sources into a variable ADVANCED_FUNCTION_SOURCES
+# by explicitly specifying the source files
+#set  (ADVANCED_FUNCTION_SOURCES
+#      "advanced/AdvancedFunctions.h"
+#      "advanced/AdvancedFunctions.cxx")
+
+# Creates a folder "executables" and adds target 
+# project (app.vcproj) under it
+set_property(TARGET app PROPERTY FOLDER "src")
+
+# Create named folders for the sources within the .vcproj
+# Empty name lists them directly under the .vcproj
+source_group("" FILES ${MATH_SOURCES})
+#source_group("simple" FILES ${SIMPLE_FUNCTION_SOURCES})
+#source_group("advanced" FILES ${ADVANCED_FUNCTION_SOURCES})
+
+# Properties->C/C++->General->Additional Include Directories
+include_directories (.)
+include_directories (&quot;E:/Libraries/opengl/include;&quot)
+include_directories (&quot;E:/Libraries/SOIL/include;&quot)
+include_directories (&quot;E:/Libraries/assimp-3.2/include;&quot)
+
+# Set Properties->General->Configuration Type to Dynamic Library(.dll)
+# Creates math.dll with the listed sources collected in the variables
+# Also adds sources to the Solution Explorer
+#add_library(math SHARED ${MATH_SOURCES} ${SIMPLE_FUNCTION_SOURCES} #${ADVANCED_FUNCTION_SOURCES})
+#set(DEPENLIBS "libs/*.lib")
+#add_library(mylibs DEPENLIBS)
+
+#target_link_libraries()
+
+# Creates a folder "libraries" and adds target project (math.vcproj) under it
+#set_property(TARGET math PROPERTY FOLDER "libraries")
+
+# Adds logic to INSTALL.vcproj to copy math.dll to the destination directory
+#install (TARGETS math
+#		 RUNTIME DESTINATION ${PROJECT_BINARY_DIR}/bin
+#		 LIBRARY DESTINATION ${PROJECT_BINARY_DIR}/bin)
